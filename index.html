@@ -203,4 +203,56 @@
             <span style="position:absolute;right:4px;bottom:4px;background:rgba(0,0,0,.7);color:#fff;font-size:11px;padding:2px 4px;border-radius:2px">${v.duration||''}</span>
           </div>
           <div>
-            <div class="rtitle"
+            <div class="rtitle">${escapeHtml(v.title)}</div>
+            <div class="rmeta">by ${escapeHtml(v.author)}<br>${escapeHtml(v.views)}</div>
+          </div>`;
+        box.appendChild(a);
+      });
+    }
+
+    // --- Comments
+    function renderComments(){
+      const host = document.getElementById('comments');
+      comments.forEach(c => {
+        const row = document.createElement('div');
+        row.className = 'cmt';
+        row.innerHTML = `
+          <div class="cavi"></div>
+          <div>
+            <div><span class="cname">${escapeHtml(c.name)}</span><span class="ctime"> • ${escapeHtml(c.time)}</span></div>
+            <div>${escapeHtml(c.text)}</div>
+          </div>`;
+        host.appendChild(row);
+      })
+    }
+
+    // Load YT Iframe API
+    let player; const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.body.appendChild(tag);
+    window.onYouTubeIframeAPIReady = () => { loadVideo(initialId); renderSidebar(); renderComments(); };
+
+    function loadVideo(id){
+      if(player){ player.destroy(); }
+      player = new YT.Player('player', {
+        videoId: id,
+        playerVars:{ autoplay:0, controls:1, rel:0, modestbranding:1, iv_load_policy:3 },
+      });
+    }
+
+    function parseVideoId(input){
+      if(!input) return '';
+      try{
+        if(/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+        const u = new URL(input);
+        if(u.hostname.includes('youtu.be')) return u.pathname.slice(1);
+        if(u.hostname.includes('youtube.com')) return u.searchParams.get('v') || '';
+      }catch(e){}
+      return '';
+    }
+
+    function escapeHtml(str){
+      return (str||'').replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[s]));
+    }
+
+  </script>
+</body>
+</html>
