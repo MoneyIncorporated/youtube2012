@@ -1,255 +1,206 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Watch (2012 skin)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>YouTube 2013 HUD — OneSoul (fan-made)</title>
   <style>
     :root{
-      --bg:#f1f1f1; --card:#fff; --text:#111; --muted:#666; --accent:#cc181e; --link:#167ac6; --border:#ddd;
+      --bg:#f1f1f1; --page:#fff; --muted:#666; --text:#111; --link:#167ac6; --border:#ddd; --accent:#cc181e; --green:#6cc070; --gray:#7f7f7f;
     }
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:14px/1.4 Arial, Helvetica, sans-serif;}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:13px/1.4 Arial, Helvetica, sans-serif}
     a{color:var(--link);text-decoration:none}
     a:hover{text-decoration:underline}
-    .topbar{background:linear-gradient(#e52d27,#b31217); height:50px; box-shadow:0 1px 0 rgba(0,0,0,.15);} 
-    .topwrap{max-width:970px;margin:0 auto;display:flex;align-items:center;gap:16px;height:50px;padding:0 12px;}
-    .logo{display:flex;align-items:center;gap:8px;color:#fff;font-weight:bold;font-size:18px}
-    .logo-badge{background:#fff;color:#e52d27;font-weight:800;padding:4px 6px;border-radius:2px}
-    .logo span small{display:block;font-size:10px;opacity:.9;line-height:1}
-    .search{margin-left:auto;display:flex;align-items:center;gap:6px}
-    .search input{height:28px;padding:0 8px;border:1px solid #a00;border-radius:2px}
-    .search button{height:30px;border:1px solid #900;background:#fff;color:#900;padding:0 10px;border-radius:2px;cursor:pointer}
 
-    .wrap{max-width:970px;margin:12px auto;display:grid;grid-template-columns:640px 1fr;gap:12px}
-    .player-card{background:var(--card);border:1px solid var(--border);}
-    .player{position:relative;aspect-ratio:16/9;background:#000}
-    .controls{display:flex;align-items:center;gap:8px;padding:8px;border-top:1px solid var(--border);}
-    .btn{border:1px solid #bbb;background:#eee;border-radius:2px;padding:5px 8px;cursor:pointer}
-    .btn:active{transform:translateY(1px)}
-    .time{margin-left:8px;color:var(--muted)}
+    /* Top bar (2013 vibe) */
+    .top{
+      background:#eee; border-bottom:1px solid #d8d8d8; height:48px;
+    }
+    .top .inner{max-width:1060px; margin:0 auto; height:48px; display:flex; align-items:center; gap:12px; padding:0 10px}
+    .ytlogo{display:flex;align-items:center;gap:8px}
+    .yt-badge{background:#e52d27;color:#fff;font-weight:800;border-radius:2px;padding:4px 6px}
+    .search{display:flex; align-items:center; gap:0; margin-left:12px; flex:1}
+    .search input{flex:1;height:28px;border:1px solid #b9b9b9;border-right:none;padding:0 8px;background:#fff}
+    .search button{height:30px;border:1px solid #b9b9b9;background:#f8f8f8;padding:0 12px;cursor:pointer}
     .spacer{flex:1}
-    select{border:1px solid #bbb;background:#fff;padding:4px;border-radius:2px}
+    .upload{margin-left:8px;border:1px solid #b9b9b9;background:#f8f8f8;padding:6px 10px;border-radius:2px;cursor:pointer}
+    .signin{margin-left:8px;background:#167ac6;color:#fff;border:none;padding:7px 12px;border-radius:2px;cursor:pointer}
 
-    .title{font-size:18px;font-weight:bold;margin:10px 8px 2px}
-    .meta{color:var(--muted);margin:0 8px 10px}
+    /* Page grid */
+    .wrap{max-width:1060px;margin:12px auto;display:grid;grid-template-columns:660px 1fr;gap:14px}
 
-    .bar{height:8px;background:#e5e5e5;margin:0 8px 12px;border-radius:2px;overflow:hidden;border:1px solid #d4d4d4}
-    .bar .dislikes{height:100%;background:#7f7f7f;float:right;width:20%}
-    .bar .likes{height:100%;background:#6cc070;width:80%}
+    /* Player card */
+    .watch{background:var(--page);border:1px solid var(--border)}
+    .player{position:relative;aspect-ratio:16/9;background:#000}
 
-    .desc{background:var(--card);border:1px solid var(--border);padding:10px}
+    /* Title & channel row */
+    .title{font-size:20px;font-weight:bold;margin:10px 12px 4px}
+    .row{display:flex;align-items:center;gap:8px;margin:0 12px 10px}
+    .chan-avi{width:36px;height:36px;border-radius:2px;background:#c33 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" fill="%23c33"/><text x="20" y="26" font-family="Arial" font-size="18" text-anchor="middle" fill="white">OS</text></svg>') center/cover no-repeat}
+    .chan-name{font-weight:bold}
+    .subs{color:#888;font-size:12px}
+    .subbtn{margin-left:auto;background:#e52d27;color:#fff;border:none;border-radius:2px;padding:6px 10px;cursor:pointer}
+    .subcount{background:#f5f5f5;border:1px solid #cfcfcf;border-radius:2px;padding:3px 6px;color:#666;font-size:12px}
 
-    .sidebar{display:flex;flex-direction:column;gap:8px}
-    .rec{display:grid;grid-template-columns:120px 1fr;gap:8px;background:var(--card);border:1px solid var(--border);padding:6px}
-    .thumb{width:120px;height:68px;background:#ccc;display:block}
-    .rec .rtitle{font-weight:bold}
-    .rec .rmeta{color:var(--muted);font-size:12px}
+    /* Views + like bar */
+    .views{display:flex;align-items:center;gap:10px;margin:0 12px 10px}
+    .viewcount{font-size:16px;color:#444}
+    .bar{flex:1;height:8px;background:#e5e5e5;border:1px solid #d4d4d4;border-radius:2px;overflow:hidden}
+    .bar .likes{height:100%;background:var(--green);width:80%}
+    .bar .dislikes{height:100%;background:var(--gray);width:20%;float:right}
+    .ldnums{display:flex;align-items:center;gap:6px;color:#666;font-size:12px}
+    .thumb{display:inline-block;width:14px;height:14px;background:#ccc;border-radius:2px}
 
-    .comments{background:var(--card);border:1px solid var(--border)}
-    .comments h3{margin:10px}
-    .cmt{display:grid;grid-template-columns:36px 1fr;gap:8px;padding:10px;border-top:1px solid var(--border)}
-    .avatar{width:36px;height:36px;border-radius:50%;background:#ddd}
+    /* Action row */
+    .actions{display:flex;align-items:center;gap:10px;margin:0 12px 2px}
+    .abtn{border:1px solid #bbb;background:#eee;border-radius:2px;padding:4px 8px;cursor:pointer}
+
+    /* Tabs */
+    .tabs{display:flex;gap:18px;margin:6px 12px 0;border-bottom:1px solid #e6e6e6}
+    .tab{padding:6px 0;position:relative;cursor:default;color:#666}
+    .tab.active{color:#a11;font-weight:bold}
+    .tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:#a11}
+
+    /* Description */
+    .desc{padding:10px 12px 16px;color:#333}
+    .muted{color:#777}
+
+    /* Comments */
+    .comments{border-top:1px solid #eee;padding:10px 12px 16px}
+    .cmt{display:grid;grid-template-columns:40px 1fr;gap:8px;margin:10px 0}
+    .cavi{width:40px;height:40px;border-radius:2px;background:#ddd}
     .cname{font-weight:bold}
-    .ctext{margin-top:2px}
+    .ctime{color:#999;font-size:12px;margin-left:6px}
 
-    .notice{max-width:970px;margin:12px auto;padding:10px;border:1px dashed #aaa;background:#fffff3}
-    .notice code{background:#fff;padding:2px 4px;border:1px solid #ddd}
+    /* Sidebar */
+    .side{display:flex;flex-direction:column;gap:8px}
+    .rec{display:grid;grid-template-columns:120px 1fr;gap:8px;background:var(--page);border:1px solid var(--border)}
+    .rthumb{width:120px;height:68px;background:#aaa}
+    .rtitle{font-weight:bold;margin-top:6px}
+    .rmeta{color:#777;font-size:12px;margin:4px 0 6px}
+
+    /* Footer note */
+    .note{max-width:1060px;margin:8px auto 30px;color:#777}
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="topwrap">
-      <div class="logo"><span class="logo-badge">Tube</span><span>Classic <small>2012 skin (fan-made)</small></span></div>
-      <div class="search">
-        <input id="urlInput" placeholder="Paste YouTube link or ID" />
-        <button id="loadBtn">Load</button>
-      </div>
+  <div class="top">
+    <div class="inner">
+      <div class="ytlogo"><span class="yt-badge">You</span><span style="font-weight:bold">Tube</span></div>
+      <div class="search"><input placeholder="Search"/><button>Search</button></div>
+      <button class="upload">Upload</button>
+      <button class="signin">Sign in</button>
     </div>
-  </div>
-
-  <div class="notice" id="notice">
-    <b>How to use this page</b><br>
-    • Share a link like <code>https://yourdomain.com/watch2012.html?v=YOUR_VIDEO_ID</code> and viewers will watch in this retro skin.<br>
-    • Or paste a YouTube link/ID above and hit <b>Load</b>. <br>
-    • Tip: add your nostalgic picks to the sidebar in <code>recommended</code> inside the script.
   </div>
 
   <div class="wrap">
-    <div>
-      <div class="player-card">
-        <div class="player" id="player"></div>
-        <div class="controls">
-          <button class="btn" id="play">Play</button>
-          <button class="btn" id="pause">Pause</button>
-          <button class="btn" id="rw">◄ 10s</button>
-          <button class="btn" id="ff">10s ►</button>
-          <button class="btn" id="mute">Mute</button>
-          <div class="time" id="time">0:00 / 0:00</div>
-          <div class="spacer"></div>
-          <label>Quality
-            <select id="quality">
-              <option value="highres">Best</option>
-              <option value="hd1080">1080p</option>
-              <option value="hd720">720p</option>
-              <option value="large">480p</option>
-              <option value="medium">360p</option>
-            </select>
-          </label>
+    <div class="watch">
+      <div class="player" id="player"></div>
+      <div class="title" id="vtitle">Your 2013-style title</div>
+
+      <div class="row">
+        <div class="chan-avi"></div>
+        <div>
+          <div class="chan-name" id="channelName">OneSoul</div>
+          <div class="subs" id="subMeta">131 videos</div>
         </div>
+        <button class="subbtn">Subscribe</button>
+        <span class="subcount" id="subCount">2,048,554</span>
       </div>
 
-      <div class="title" id="vtitle">Your video title</div>
-      <div class="meta" id="vmeta">Uploaded • 2012 vibes • 1,234,567 views</div>
-      <div class="bar"><div class="likes"></div><div class="dislikes"></div></div>
+      <div class="views">
+        <div class="viewcount" id="viewCount">301+ views</div>
+        <div class="bar"><div class="likes" id="likeBar"></div><div class="dislikes"></div></div>
+        <div class="ldnums"><span class="thumb"></span><span id="likeNum">8,938</span><span class="thumb"></span><span id="dislikeNum">23</span></div>
+      </div>
+
+      <div class="actions">
+        <div class="abtn">About</div>
+        <div class="abtn">Share</div>
+        <div class="abtn">Add to</div>
+        <div class="abtn">Report</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active">About</div>
+        <div class="tab">Transcript</div>
+        <div class="tab">Statistics</div>
+      </div>
 
       <div class="desc" id="vdesc">
-        <b>Description</b><br>
-        Drop your nostalgic blurb here. This page is a fan homage to classic YouTube. Not affiliated with Google/YouTube.
+        <div class="muted">Published on <span id="pubDate">May 30, 2013</span></div>
+        <p id="descText">Tony Stark returns to HISHE for How Iron Man 3 Should Have Ended. (Demo copy — replace in script config.)</p>
       </div>
 
-      <div class="comments">
-        <h3>Top Comments (2012)</h3>
-        <div class="cmt">
-          <div class="avatar"></div>
-          <div>
-            <div class="cname">keyboardwarrior97</div>
-            <div class="ctext">I was today years old when I realized nostalgia hits harder than a like/dislike bar.</div>
-          </div>
-        </div>
-        <div class="cmt">
-          <div class="avatar"></div>
-          <div>
-            <div class="cname">lofiStudy</div>
-            <div class="ctext">2012 me just vibing after school with Ray William Johnson and Harlem Shake.</div>
-          </div>
-        </div>
+      <div class="comments" id="comments">
+        <div style="font-weight:bold">Top Comments</div>
+        <!-- comments injected here -->
       </div>
     </div>
 
-    <div class="sidebar" id="sidebar"></div>
+    <div class="side" id="sidebar"></div>
   </div>
 
+  <div class="note">This is a fan recreation of the 2013 YouTube watch page for nostalgic projects. Videos play via the official YouTube IFrame API. Not affiliated with Google/YouTube.</div>
+
   <script>
-    // --- Minimal old-school watch page powered by the YouTube IFrame API ---
-    // 1) Host this file somewhere (Netlify, Vercel, GitHub Pages)
-    // 2) Share link like: https://yourdomain.com/watch2012.html?v=VIDEO_ID
-    // 3) Edit the recommended[] array below to add nostalgic picks
+    // ------- CONFIG (personalize here) -------
+    const CONFIG = {
+      channelName: 'OneSoul',
+      subs: '2,048,554',
+      subMeta: '131 videos',
+      viewCount: '301+ views',
+      likePercent: 0.80, // 0..1
+      likes: '8,938',
+      dislikes: '23',
+      published: 'May 30, 2013',
+      title: 'How <Your Video> Should Have Ended',
+      description: 'Replace this with your throwback description text. Keep it short for 2013 vibes.'
+    };
 
-    const $ = (q)=>document.querySelector(q);
-    const urlParams = new URLSearchParams(location.search);
-    const initialId = parseVideoId(urlParams.get('v')) || '';
-
+    // Sidebar recommendations (personalize)
     const recommended = [
-      // { id: 'VIDEO_ID', title: 'Title (2010‑2013)', channel: 'Channel', views: '12M views • 2012' },
+      // id, title, author, views, duration
+      {id:'dQw4w9WgXcQ', title:'Never Gonna Give You Up', author:'Rick Astley', views:'1,228,782 views', duration:'3:11'},
+      {id:'9bZkp7q19f0', title:'PSY - GANGNAM STYLE', author:'officialpsy', views:'4,000,000,000+ views', duration:'4:13'},
+      {id:'CevxZvSJLk8', title:'Katy Perry - Roar', author:'KatyPerryVEVO', views:'3B views', duration:'4:30'},
     ];
 
+    // Comments (personalize)
+    const comments = [
+      {name:'Bobsheaux', time:'7 minutes ago', text:'Why do so many ppl have a problem with that? I said "it\'s because I\'m Batman!"'},
+      {name:'lofiStudy', time:'12 minutes ago', text:'2013 me after school binge watching HISHE and Smosh.'},
+      {name:'classicYTfan', time:'26 minutes ago', text:'This layout hits different. The like/dislike BAR is peak nostalgia.'}
+    ];
+
+    // --- State from URL
+    const urlParams = new URLSearchParams(location.search);
+    const initialId = parseVideoId(urlParams.get('v')) || 'fbwb7WkWf_I'; // default to your link
+
+    // --- Render static text
+    document.getElementById('channelName').textContent = CONFIG.channelName;
+    document.getElementById('subMeta').textContent = CONFIG.subMeta;
+    document.getElementById('subCount').textContent = CONFIG.subs;
+    document.getElementById('viewCount').textContent = CONFIG.viewCount;
+    document.getElementById('pubDate').textContent = CONFIG.published;
+    document.getElementById('vtitle').textContent = CONFIG.title;
+    document.getElementById('descText').textContent = CONFIG.description;
+    document.getElementById('likeNum').textContent = CONFIG.likes;
+    document.getElementById('dislikeNum').textContent = CONFIG.dislikes;
+    document.getElementById('likeBar').style.width = (CONFIG.likePercent*100)+"%";
+
+    // --- Sidebar
     function renderSidebar(){
       const box = document.getElementById('sidebar');
       box.innerHTML = '';
-      if(!recommended.length){
-        const empty = document.createElement('div');
-        empty.className='rec';
-        empty.innerHTML = `<div class="thumb"></div><div><div class="rtitle">Add your 2010‑2013 picks here</div><div class="rmeta">Edit the <code>recommended</code> array in the HTML.</div></div>`;
-        box.appendChild(empty);
-        return;
-      }
       recommended.forEach(v => {
-        const el = document.createElement('a');
-        el.className = 'rec';
-        el.href = `?v=${encodeURIComponent(v.id)}`;
-        el.innerHTML = `
-          <span class="thumb" style="background:#000 url(https://i.ytimg.com/vi/${v.id}/mqdefault.jpg) center/cover no-repeat"></span>
-          <span>
-            <div class="rtitle">${escapeHtml(v.title)}</div>
-            <div class="rmeta">${escapeHtml(v.channel)} • ${escapeHtml(v.views)}</div>
-          </span>`;
-        box.appendChild(el);
-      });
-    }
-
-    // Load IFrame API
-    let player, timeTimer;
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    window.onYouTubeIframeAPIReady = () => {
-      if (initialId) loadVideo(initialId);
-      renderSidebar();
-    };
-
-    function loadVideo(id){
-      clearInterval(timeTimer);
-      if(player){ player.destroy(); }
-      player = new YT.Player('player', {
-        videoId: id,
-        playerVars: {
-          autoplay: 0,
-          controls: 0, // hide modern controls, we use custom
-          modestbranding: 1,
-          rel: 0,
-          iv_load_policy: 3
-        },
-        events: {
-          'onReady': onReady,
-          'onStateChange': onState
-        }
-      });
-      // Fake meta for the vibe — swap this with your own text if you want
-      document.getElementById('vtitle').textContent = 'Your video — throwback edition';
-      document.getElementById('vmeta').textContent = 'Uploaded • 2012 vibes • 1,234,567 views';
-      document.getElementById('vdesc').querySelector('b').nextSibling;
-    }
-
-    function onReady(){
-      updateTime();
-      timeTimer = setInterval(updateTime, 250);
-    }
-
-    function onState(){ /* could add play/pause UI states here */ }
-
-    function updateTime(){
-      if(!player || typeof player.getCurrentTime !== 'function') return;
-      const cur = player.getCurrentTime();
-      const dur = player.getDuration() || 0;
-      document.getElementById('time').textContent = `${fmt(cur)} / ${fmt(dur)}`;
-    }
-
-    function fmt(s){ s = Math.floor(s); const m = Math.floor(s/60); const ss = (s%60).toString().padStart(2,'0'); return `${m}:${ss}`; }
-
-    function parseVideoId(input){
-      if(!input) return '';
-      try{
-        // Accept raw ID or full URL
-        if(/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
-        const u = new URL(input);
-        if(u.hostname.includes('youtu.be')) return u.pathname.slice(1);
-        if(u.hostname.includes('youtube.com')) return u.searchParams.get('v') || '';
-      }catch(e){ /* ignore */ }
-      return '';
-    }
-
-    function escapeHtml(str){
-      return (str||'').replace(/[&<>"]/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[s]));
-    }
-
-    // Controls wiring
-    document.getElementById('play').onclick = ()=> player && player.playVideo();
-    document.getElementById('pause').onclick = ()=> player && player.pauseVideo();
-    document.getElementById('rw').onclick = ()=> player && player.seekTo(Math.max(0, player.getCurrentTime()-10), true);
-    document.getElementById('ff').onclick = ()=> player && player.seekTo(player.getCurrentTime()+10, true);
-    document.getElementById('mute').onclick = ()=> player && (player.isMuted()? player.unMute(): player.mute());
-    document.getElementById('quality').onchange = (e)=> player && player.setPlaybackQuality(e.target.value);
-
-    document.getElementById('loadBtn').onclick = ()=>{
-      const val = document.getElementById('urlInput').value.trim();
-      const id = parseVideoId(val);
-      if(!id){ alert('Paste a full YouTube link or a 11‑char video ID'); return; }
-      const url = new URL(location.href);
-      url.searchParams.set('v', id);
-      history.replaceState({}, '', url.toString());
-      loadVideo(id);
-    }
-  </script>
-</body>
-</html>
+        const a = document.createElement('a');
+        a.className = 'rec';
+        a.href = `?v=${encodeURIComponent(v.id)}`;
+        a.innerHTML = `
+          <div class="rthumb" style="background:#000 url(https://i.ytimg.com/vi/${v.id}/mqdefault.jpg) center/cover no-repeat; position:relative">
+            <span style="position:absolute;right:4px;bottom:4px;background:rgba(0,0,0,.7);color:#fff;font-size:11px;padding:2px 4px;border-radius:2px">${v.duration||''}</span>
+          </div>
+          <div>
+            <div class="rtitle"
